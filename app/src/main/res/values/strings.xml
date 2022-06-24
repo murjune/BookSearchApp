@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">BookSearchApp</string>
+
+    <!--    프레그먼트 구분-->
+    <string name="search">Search Books</string>
+    <string name="settings">Settings</string>
+    <string name="favorite">Favorite Books</string>
 </resources>

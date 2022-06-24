@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_main"
+    app:startDestination="@id/fragment_favorite">
+
+    <fragment
+        android:id="@+id/fragment_favorite"
+        android:name="org.techtown.booksearchapp.ui.view.FavoriteFragment"
+        android:label="fragment_favorite"
+        tools:layout="@layout/fragment_favorite">
+        <action
+            android:id="@+id/action_favoriteFragment_to_settingsFragment"
+            app:destination="@id/fragment_settings" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragment_settings"
+        android:name="org.techtown.booksearchapp.ui.view.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" />
+    <fragment
+        android:id="@+id/fragment_search"
+        android:name="org.techtown.booksearchapp.ui.view.SearchFragment"
+        android:label="fragment_search"
+        tools:layout="@layout/fragment_search">
+        <action
+            android:id="@+id/action_searchFragment_to_favoriteFragment"
+            app:destination="@id/fragment_favorite" />
+    </fragment>
+</navigation>
