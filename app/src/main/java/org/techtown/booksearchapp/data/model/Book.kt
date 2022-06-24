@@ -1,9 +1,8 @@
 package org.techtown.booksearchapp.data.model
 
-
 import com.google.gson.annotations.SerializedName
 
-data class Document(
+data class Book(
     @SerializedName("authors")
     val authors: List<String>,
     @SerializedName("contents")
