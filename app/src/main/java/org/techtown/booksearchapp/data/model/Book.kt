@@ -10,7 +10,7 @@ data class Book(
     @SerializedName("datetime")
     val datetime: String, // "2017-06-27T00:00:00.000+09:00"
     @SerializedName("isbn")
-    val isbn: String,
+    val id: String,
     @SerializedName("price")
     val price: Int,
     @SerializedName("publisher")
