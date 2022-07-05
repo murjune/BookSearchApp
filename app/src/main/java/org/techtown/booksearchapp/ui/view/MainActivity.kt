@@ -14,8 +14,9 @@ import org.techtown.booksearchapp.ui.viewmodel.BookSearchViewModelFactory
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    private val bookSearchViewModel by viewModels<BookSearchViewModel>() {
-        BookSearchViewModelFactory(BookSearchRepositoryImpl())
+    val bookSearchViewModel by viewModels<BookSearchViewModel>() {
+        val bookSearchRepository = BookSearchRepositoryImpl()
+        BookSearchViewModelFactory(bookSearchRepository, this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
