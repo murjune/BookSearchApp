@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import org.techtown.booksearchapp.data.repository.BookSearchRepositoryImpl
 import org.techtown.booksearchapp.databinding.FragmentSearchBinding
@@ -47,9 +48,15 @@ class SearchFragment : androidx.fragment.app.Fragment() {
         _binding = null
     }
 
+    private fun clickItem(position: Int) {
+        val action =
+            SearchFragmentDirections.actionFragmentSearchToFragmentBook(bookSearchAdapter.currentList[position])
+        findNavController().navigate(action)
+    }
+
     private fun setUpAdapter() {
 
-        bookSearchAdapter = BookSearchAdapter()
+        bookSearchAdapter = BookSearchAdapter(::clickItem)
         binding.rvSearch.apply {
 //            setHasFixedSize(true)
             addItemDecoration(
