@@ -6,17 +6,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
-import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
+import org.techtown.booksearchapp.data.repository.BookSearchRepositoryImpl
 import org.techtown.booksearchapp.databinding.FragmentSearchBinding
 import org.techtown.booksearchapp.ui.adapter.BookSearchAdapter
 import org.techtown.booksearchapp.ui.viewmodel.BookSearchViewModel
+import org.techtown.booksearchapp.ui.viewmodel.BookSearchViewModelFactory
 
-class SearchFragment : Fragment() {
+class SearchFragment : androidx.fragment.app.Fragment() {
 
     private var _binding: FragmentSearchBinding? = null
     private val binding get() = _binding ?: error("바인딩에 null값 들어감")
-    private lateinit var bookSearchViewModel: BookSearchViewModel
+
+    //    private lateinit var bookSearchViewModel: BookSearchViewModel
+    val bookSearchViewModel by viewModels<BookSearchViewModel> {
+        val bookSearchRepository = BookSearchRepositoryImpl()
+        BookSearchViewModelFactory(bookSearchRepository, this)
+    }
     private lateinit var bookSearchAdapter: BookSearchAdapter
 
     override fun onCreateView(
@@ -30,7 +37,6 @@ class SearchFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        bookSearchViewModel = (activity as MainActivity).bookSearchViewModel
         setUpAdapter()
         searchBooks()
         initView()
