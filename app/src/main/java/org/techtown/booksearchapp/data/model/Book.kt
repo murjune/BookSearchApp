@@ -1,7 +1,10 @@
 package org.techtown.booksearchapp.data.model
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class Book(
     @SerializedName("authors")
     val authors: List<String>,
@@ -27,4 +30,4 @@ data class Book(
     val translators: List<String>,
     @SerializedName("url")
     val url: String // "https://search.daum.net/search?w=bookpage&bookId=5213070&q=Android"
-)
+) : Parcelable
