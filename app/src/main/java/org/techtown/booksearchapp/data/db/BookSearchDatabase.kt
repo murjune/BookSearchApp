@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import org.techtown.booksearchapp.data.model.Book
 
 @Database(
@@ -11,6 +12,7 @@ import org.techtown.booksearchapp.data.model.Book
     version = 1,
     exportSchema = false // 얘는 뭘까
 )
+@TypeConverters(OrmConverter::class)
 abstract class BookSearchDatabase : RoomDatabase() {
 
     abstract fun bookSearchDao(): BookSearchDao
