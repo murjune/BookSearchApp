@@ -3,6 +3,7 @@ package org.techtown.booksearchapp.ui.viewmodel
 import androidx.lifecycle.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import org.techtown.booksearchapp.data.model.Book
 import org.techtown.booksearchapp.data.model.SearchResponse
 import org.techtown.booksearchapp.data.repository.BookSearchRepository
 import retrofit2.Response
@@ -27,6 +28,7 @@ class BookSearchViewModel(
         query = savedStateHandle.get<String>(SAVE_STATE_KEY) ?: ""
     }
 
+    // remote
     fun searchBooks(query: String) = viewModelScope.launch(Dispatchers.IO) {
         val response: Response<SearchResponse> = bookSearchRepository.searchBooks(query)
         if (response.isSuccessful) {
@@ -35,6 +37,17 @@ class BookSearchViewModel(
             }
         }
     }
+
+    // local
+    fun saveBook(book: Book) = viewModelScope.launch {
+        bookSearchRepository.insertBooks(book)
+    }
+
+    fun deleteBook(book: Book) = viewModelScope.launch {
+        bookSearchRepository.deleteBooks(book)
+    }
+
+    val favoriteBooks: LiveData<List<Book>> = bookSearchRepository.getFavoriteBooks()
 
     companion object {
         private const val SAVE_STATE_KEY = "query"
