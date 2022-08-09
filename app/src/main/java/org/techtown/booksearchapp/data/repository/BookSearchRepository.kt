@@ -18,5 +18,5 @@ interface BookSearchRepository {
 
     suspend fun deleteBooks(book: Book)
 
-    suspend fun getFavoriteBooks(): LiveData<List<Book>>
+    fun getFavoriteBooks(): LiveData<List<Book>>
 }

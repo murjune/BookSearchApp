@@ -15,5 +15,5 @@ interface BookSearchDao {
     suspend fun deleteBook(book: Book)
 
     @Query("SELECT * FROM books") // Select (전체) From (Entity Table : books)
-    suspend fun getFavoriteBooks(): LiveData<List<Book>>
+    fun getFavoriteBooks(): LiveData<List<Book>>
 }

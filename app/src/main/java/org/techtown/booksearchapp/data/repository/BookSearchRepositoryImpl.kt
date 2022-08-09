@@ -25,7 +25,7 @@ class BookSearchRepositoryImpl(
         db.bookSearchDao().deleteBook(book)
     }
 
-    override suspend fun getFavoriteBooks(): LiveData<List<Book>> {
+    override fun getFavoriteBooks(): LiveData<List<Book>> {
         return db.bookSearchDao().getFavoriteBooks()
     }
     // api -> repository -> model -> view
