@@ -2,7 +2,7 @@ package org.techtown.booksearchapp.data.model
 
 import com.google.gson.annotations.SerializedName
 
-data class SearchResponse(
+data class ResponseSearchBook(
     @SerializedName("documents")
     val books: List<Book>,
     @SerializedName("meta")
