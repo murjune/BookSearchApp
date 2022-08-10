@@ -7,7 +7,7 @@ import timber.log.Timber
 
 @HiltAndroidApp
 // 앱의 수명 주기에 연결된 컨테이너를 추가
-class App : Application() {
+class BookSearchApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
