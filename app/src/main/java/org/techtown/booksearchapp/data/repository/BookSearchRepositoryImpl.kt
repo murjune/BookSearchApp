@@ -1,32 +1,30 @@
 package org.techtown.booksearchapp.data.repository
 
 import androidx.lifecycle.LiveData
-import org.techtown.booksearchapp.data.api.SearchBookClient
-import org.techtown.booksearchapp.data.db.BookSearchDatabase
+import org.techtown.booksearchapp.data.datasource.RemoteDataSource
+import org.techtown.booksearchapp.data.db.BookSearchDao
 import org.techtown.booksearchapp.data.model.Book
-import org.techtown.booksearchapp.data.model.SearchResponse
-import retrofit2.Response
+import javax.inject.Inject
 
-class BookSearchRepositoryImpl(
-    private val db: BookSearchDatabase
+class BookSearchRepositoryImpl @Inject constructor(
+    private val bookSearchDao: BookSearchDao,
+    private val remoteDataSource: RemoteDataSource
 ) : BookSearchRepository {
 
     // remote
-    override suspend fun searchBooks(query: String): Response<SearchResponse> {
-        return SearchBookClient.bookSearchApi.searchBooks(query)
-    }
+    override suspend fun searchBooks(query: String): List<Book>? =
+        remoteDataSource.searchBooks(query)
 
     // Room
     override suspend fun insertBooks(book: Book) {
-        db.bookSearchDao().insertBook(book)
+        bookSearchDao.insertBook(book)
     }
 
     override suspend fun deleteBooks(book: Book) {
-        db.bookSearchDao().deleteBook(book)
+        bookSearchDao.deleteBook(book)
     }
 
     override fun getFavoriteBooks(): LiveData<List<Book>> {
-        return db.bookSearchDao().getFavoriteBooks()
+        return bookSearchDao.getFavoriteBooks()
     }
-    // api -> repository -> model -> view
 }
