@@ -9,7 +9,6 @@ import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.techtown.booksearchapp.BuildConfig
-import org.techtown.booksearchapp.data.api.BookSearchApi
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
@@ -20,11 +19,6 @@ import javax.inject.Singleton
 object NetworkModule {
     private const val BASE_URL: String = BuildConfig.BASE_URL
     private const val API_KEY = BuildConfig.bookAPIKey
-
-    @Singleton
-    @Provides
-    fun provideBookSearchApi(retrofit: Retrofit): BookSearchApi =
-        retrofit.create(BookSearchApi::class.java)
 
     @Provides
     @Singleton
