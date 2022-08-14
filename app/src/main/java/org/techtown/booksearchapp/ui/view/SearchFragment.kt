@@ -6,25 +6,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
-import org.techtown.booksearchapp.data.repository.BookSearchRepositoryImpl
+import dagger.hilt.android.AndroidEntryPoint
 import org.techtown.booksearchapp.databinding.FragmentSearchBinding
 import org.techtown.booksearchapp.ui.adapter.BookSearchAdapter
 import org.techtown.booksearchapp.ui.viewmodel.BookSearchViewModel
-import org.techtown.booksearchapp.ui.viewmodel.BookSearchViewModelFactory
 
+@AndroidEntryPoint
 class SearchFragment : androidx.fragment.app.Fragment() {
 
     private var _binding: FragmentSearchBinding? = null
     private val binding get() = _binding ?: error("바인딩에 null값 들어감")
 
-    //    private lateinit var bookSearchViewModel: BookSearchViewModel
-    val bookSearchViewModel by viewModels<BookSearchViewModel> {
-        val bookSearchRepository = BookSearchRepositoryImpl()
-        BookSearchViewModelFactory(bookSearchRepository, this)
-    }
+    val bookSearchViewModel by activityViewModels<BookSearchViewModel>()
     private lateinit var bookSearchAdapter: BookSearchAdapter
 
     override fun onCreateView(
@@ -58,7 +54,7 @@ class SearchFragment : androidx.fragment.app.Fragment() {
 
         bookSearchAdapter = BookSearchAdapter(::clickItem)
         binding.rvSearch.apply {
-//            setHasFixedSize(true)
+            setHasFixedSize(true)
             addItemDecoration(
                 DividerItemDecoration(
                     requireContext(),
@@ -91,9 +87,8 @@ class SearchFragment : androidx.fragment.app.Fragment() {
     }
 
     private fun initView() {
-        bookSearchViewModel.searchResult.observe(viewLifecycleOwner) { response ->
-            val books = response.books
-            bookSearchAdapter.submitList(books.toMutableList())
+        bookSearchViewModel.searchResult.observe(viewLifecycleOwner) { bookList ->
+            bookSearchAdapter.submitList(bookList.toList())
         }
     }
 

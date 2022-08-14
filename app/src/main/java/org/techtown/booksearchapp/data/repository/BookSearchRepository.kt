@@ -1,10 +1,19 @@
 package org.techtown.booksearchapp.data.repository
 
-import org.techtown.booksearchapp.data.model.SearchResponse
-import retrofit2.Response
+import androidx.lifecycle.LiveData
+import org.techtown.booksearchapp.data.model.Book
 
 interface BookSearchRepository {
+
+    // remote
     suspend fun searchBooks(
         query: String
-    ): Response<SearchResponse>
+    ): List<Book>?
+
+    // Room
+    suspend fun insertBooks(book: Book)
+
+    suspend fun deleteBooks(book: Book)
+
+    fun getFavoriteBooks(): LiveData<List<Book>>
 }

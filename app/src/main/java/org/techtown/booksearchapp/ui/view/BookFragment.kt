@@ -7,15 +7,20 @@ import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebViewClient
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.navArgs
+import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 import org.techtown.booksearchapp.databinding.FragmentBookBinding
+import org.techtown.booksearchapp.ui.viewmodel.BookSearchViewModel
 
+@AndroidEntryPoint
 class BookFragment : Fragment() {
 
     private var _binding: FragmentBookBinding? = null
     private val binding get() = _binding ?: error("바인딩에 null이 들어감")
     private val args by navArgs<BookFragmentArgs>()
-
+    private val viewModel by activityViewModels<BookSearchViewModel>()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -27,8 +32,17 @@ class BookFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         initWebPage()
+        setOnClickButton()
+    }
+
+    private fun setOnClickButton() {
+        binding.fabFavorite.setOnClickListener {
+            val book = args.book
+            viewModel.saveBook(book)
+            // TODO snackbar 위치 좀 올리기
+            view?.let { Snackbar.make(it, "책이 저장되었습니다.", Snackbar.LENGTH_SHORT).show() }
+        }
     }
 
     @SuppressLint("SetJavaScriptEnabled")

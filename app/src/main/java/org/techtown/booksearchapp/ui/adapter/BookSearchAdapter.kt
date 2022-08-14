@@ -9,7 +9,7 @@ import coil.load
 import org.techtown.booksearchapp.data.model.Book
 import org.techtown.booksearchapp.databinding.ItemBookSampleBinding
 
-class BookSearchAdapter(val clickItem: (Int) -> Unit) :
+class BookSearchAdapter(val clickItem: ((Int) -> Unit)?) :
     ListAdapter<Book, BookSearchAdapter.BookSearchViewHolder>(bookDiffUtilCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookSearchViewHolder {
@@ -25,7 +25,7 @@ class BookSearchAdapter(val clickItem: (Int) -> Unit) :
     }
 
     class BookSearchViewHolder(
-        private val clickItem: (Int) -> Unit,
+        private val clickItem: ((Int) -> Unit)?,
         private val binding: ItemBookSampleBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
@@ -39,7 +39,7 @@ class BookSearchAdapter(val clickItem: (Int) -> Unit) :
             binding.tvAuthor.text = "$author | $publisher"
             binding.tvDatetime.text = date
             binding.clBook.setOnClickListener {
-                clickItem(adapterPosition)
+                clickItem?.invoke(adapterPosition)
             }
         }
     }
