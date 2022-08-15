@@ -6,7 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -48,9 +50,17 @@ class FavoriteFragment : Fragment() {
 //            bookSearchAdapter.submitList(it.toList())
 //        }
         // flow는 코루틴 스코프 안에서 collect 혹은 collectLatest을 통해 data observing함
-        lifecycleScope.launch {
-            bookSearchViewModel.favoriteBooks.collectLatest {
-                bookSearchAdapter.submitList(it.toList())
+//        lifecycleScope.launch {
+//            bookSearchViewModel.favoriteBooks.collectLatest {
+//                bookSearchAdapter.submitList(it.toList())
+//            }
+//        }
+        // flow 동작을 Fragment lifecycle과 동기화시키기
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                bookSearchViewModel.favoriteBooks.collectLatest {
+                    bookSearchAdapter.submitList(it.toList())
+                }
             }
         }
     }

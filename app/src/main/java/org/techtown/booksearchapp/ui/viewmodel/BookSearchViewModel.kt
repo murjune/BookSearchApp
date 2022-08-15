@@ -6,7 +6,9 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import org.techtown.booksearchapp.data.model.Book
 import org.techtown.booksearchapp.data.repository.BookSearchRepository
@@ -29,7 +31,12 @@ class BookSearchViewModel @Inject constructor(
             savedStateHandle.set(SAVE_STATE_KEY, value)
         }
 
-    val favoriteBooks: Flow<List<Book>> = bookSearchRepository.getFavoriteBooks()
+    //    val favoriteBooks: Flow<List<Book>> = bookSearchRepository.getFavoriteBooks()
+    
+    // Flow -> StateFlow 변환작업
+    val favoriteBooks: StateFlow<List<Book>> = bookSearchRepository
+        .getFavoriteBooks()
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), listOf())
 
     init {
         query = savedStateHandle.get<String>(SAVE_STATE_KEY) ?: ""
