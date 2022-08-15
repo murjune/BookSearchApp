@@ -1,7 +1,12 @@
 package org.techtown.booksearchapp.ui.viewmodel
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import org.techtown.booksearchapp.data.model.Book
 import org.techtown.booksearchapp.data.repository.BookSearchRepository
@@ -24,6 +29,8 @@ class BookSearchViewModel @Inject constructor(
             savedStateHandle.set(SAVE_STATE_KEY, value)
         }
 
+    val favoriteBooks: Flow<List<Book>> = bookSearchRepository.getFavoriteBooks()
+
     init {
         query = savedStateHandle.get<String>(SAVE_STATE_KEY) ?: ""
     }
@@ -43,8 +50,6 @@ class BookSearchViewModel @Inject constructor(
     fun deleteBook(book: Book) = viewModelScope.launch {
         bookSearchRepository.deleteBooks(book)
     }
-
-    val favoriteBooks: LiveData<List<Book>> = bookSearchRepository.getFavoriteBooks()
 
     companion object {
         private const val SAVE_STATE_KEY = "query"

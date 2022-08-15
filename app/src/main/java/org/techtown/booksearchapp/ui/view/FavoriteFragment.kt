@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -13,6 +14,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import org.techtown.booksearchapp.databinding.FragmentFavoriteBinding
 import org.techtown.booksearchapp.ui.adapter.BookSearchAdapter
 import org.techtown.booksearchapp.ui.viewmodel.BookSearchViewModel
@@ -41,8 +44,14 @@ class FavoriteFragment : Fragment() {
     }
 
     private fun obServeFavoriteBooks() {
-        bookSearchViewModel.favoriteBooks.observe(viewLifecycleOwner) {
-            bookSearchAdapter.submitList(it.toList())
+//        bookSearchViewModel.favoriteBooks.observe(viewLifecycleOwner) {
+//            bookSearchAdapter.submitList(it.toList())
+//        }
+        // flow는 코루틴 스코프 안에서 collect 혹은 collectLatest을 통해 data observing함
+        lifecycleScope.launch {
+            bookSearchViewModel.favoriteBooks.collectLatest {
+                bookSearchAdapter.submitList(it.toList())
+            }
         }
     }
 
@@ -70,7 +79,8 @@ class FavoriteFragment : Fragment() {
 
     private fun setupTouchHelper(view: View) {
         val itemTouchHelperCallback = object : ItemTouchHelper.SimpleCallback(
-            0, ItemTouchHelper.LEFT
+            0,
+            ItemTouchHelper.LEFT
         ) {
             override fun onMove(
                 recyclerView: RecyclerView,

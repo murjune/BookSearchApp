@@ -1,7 +1,11 @@
 package org.techtown.booksearchapp.data.db
 
-import androidx.lifecycle.LiveData
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Delete
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
+import kotlinx.coroutines.flow.Flow
 import org.techtown.booksearchapp.data.model.Book
 
 @Dao
@@ -15,5 +19,5 @@ interface BookSearchDao {
     suspend fun deleteBook(book: Book)
 
     @Query("SELECT * FROM books") // Select (전체) From (Entity Table : books)
-    fun getFavoriteBooks(): LiveData<List<Book>>
+    fun getFavoriteBooks(): Flow<List<Book>>
 }

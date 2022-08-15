@@ -1,6 +1,6 @@
 package org.techtown.booksearchapp.data.repository
 
-import androidx.lifecycle.LiveData
+import kotlinx.coroutines.flow.Flow
 import org.techtown.booksearchapp.data.model.Book
 
 interface BookSearchRepository {
@@ -15,5 +15,5 @@ interface BookSearchRepository {
 
     suspend fun deleteBooks(book: Book)
 
-    fun getFavoriteBooks(): LiveData<List<Book>>
+    fun getFavoriteBooks(): Flow<List<Book>>
 }

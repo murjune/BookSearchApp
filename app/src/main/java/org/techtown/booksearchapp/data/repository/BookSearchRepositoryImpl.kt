@@ -1,6 +1,6 @@
 package org.techtown.booksearchapp.data.repository
 
-import androidx.lifecycle.LiveData
+import kotlinx.coroutines.flow.Flow
 import org.techtown.booksearchapp.data.datasource.RemoteDataSource
 import org.techtown.booksearchapp.data.db.BookSearchDao
 import org.techtown.booksearchapp.data.model.Book
@@ -24,7 +24,7 @@ class BookSearchRepositoryImpl @Inject constructor(
         bookSearchDao.deleteBook(book)
     }
 
-    override fun getFavoriteBooks(): LiveData<List<Book>> {
+    override fun getFavoriteBooks(): Flow<List<Book>> {
         return bookSearchDao.getFavoriteBooks()
     }
 }
