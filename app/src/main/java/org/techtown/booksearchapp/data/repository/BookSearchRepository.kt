@@ -2,13 +2,14 @@ package org.techtown.booksearchapp.data.repository
 
 import kotlinx.coroutines.flow.Flow
 import org.techtown.booksearchapp.data.model.Book
+import org.techtown.booksearchapp.util.UiState
 
 interface BookSearchRepository {
 
     // remote
-    suspend fun searchBooks(
+    fun searchBooks(
         query: String
-    ): List<Book>?
+    ): Flow<UiState<List<Book>>>
 
     // Room
     suspend fun insertBooks(book: Book)
