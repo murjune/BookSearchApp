@@ -16,6 +16,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import org.techtown.booksearchapp.databinding.FragmentFavoriteBinding
 import org.techtown.booksearchapp.ui.adapter.BookSearchAdapter
 import org.techtown.booksearchapp.ui.viewmodel.BookSearchViewModel
+import org.techtown.booksearchapp.util.collectLatestStateFlow
 
 @AndroidEntryPoint
 class FavoriteFragment : Fragment() {
@@ -41,7 +42,8 @@ class FavoriteFragment : Fragment() {
     }
 
     private fun obServeFavoriteBooks() {
-        bookSearchViewModel.favoriteBooks.observe(viewLifecycleOwner) {
+        // 확장함수로 보일러플레이트코드 줄이기
+        collectLatestStateFlow(bookSearchViewModel.favoriteBooks) {
             bookSearchAdapter.submitList(it.toList())
         }
     }
@@ -70,7 +72,8 @@ class FavoriteFragment : Fragment() {
 
     private fun setupTouchHelper(view: View) {
         val itemTouchHelperCallback = object : ItemTouchHelper.SimpleCallback(
-            0, ItemTouchHelper.LEFT
+            0,
+            ItemTouchHelper.LEFT
         ) {
             override fun onMove(
                 recyclerView: RecyclerView,

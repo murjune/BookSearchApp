@@ -6,18 +6,15 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
+import dagger.hilt.android.AndroidEntryPoint
 import org.techtown.booksearchapp.R
-import org.techtown.booksearchapp.data.repository.BookSearchRepositoryImpl
 import org.techtown.booksearchapp.databinding.ActivityMainBinding
 import org.techtown.booksearchapp.ui.viewmodel.BookSearchViewModel
-import org.techtown.booksearchapp.ui.viewmodel.BookSearchViewModelFactory
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    val bookSearchViewModel by viewModels<BookSearchViewModel>() {
-        val bookSearchRepository = BookSearchRepositoryImpl()
-        BookSearchViewModelFactory(bookSearchRepository, this)
-    }
+    val bookSearchViewModel by viewModels<BookSearchViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

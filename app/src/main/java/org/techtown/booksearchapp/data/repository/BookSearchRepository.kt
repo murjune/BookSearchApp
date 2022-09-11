@@ -1,19 +1,20 @@
 package org.techtown.booksearchapp.data.repository
 
-import androidx.lifecycle.LiveData
+import kotlinx.coroutines.flow.Flow
 import org.techtown.booksearchapp.data.model.Book
+import org.techtown.booksearchapp.util.UiState
 
 interface BookSearchRepository {
 
     // remote
-    suspend fun searchBooks(
+    fun searchBooks(
         query: String
-    ): List<Book>?
+    ): Flow<UiState<List<Book>>>
 
     // Room
     suspend fun insertBooks(book: Book)
 
     suspend fun deleteBooks(book: Book)
 
-    fun getFavoriteBooks(): LiveData<List<Book>>
+    fun getFavoriteBooks(): Flow<List<Book>>
 }

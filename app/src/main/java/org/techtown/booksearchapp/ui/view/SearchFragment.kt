@@ -13,6 +13,9 @@ import dagger.hilt.android.AndroidEntryPoint
 import org.techtown.booksearchapp.databinding.FragmentSearchBinding
 import org.techtown.booksearchapp.ui.adapter.BookSearchAdapter
 import org.techtown.booksearchapp.ui.viewmodel.BookSearchViewModel
+import org.techtown.booksearchapp.util.UiState
+import org.techtown.booksearchapp.util.collectLatestStateFlow
+import timber.log.Timber
 
 @AndroidEntryPoint
 class SearchFragment : androidx.fragment.app.Fragment() {
@@ -36,7 +39,7 @@ class SearchFragment : androidx.fragment.app.Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setUpAdapter()
         searchBooks()
-        initView()
+        initObserving()
     }
 
     override fun onDestroyView() {
@@ -51,7 +54,6 @@ class SearchFragment : androidx.fragment.app.Fragment() {
     }
 
     private fun setUpAdapter() {
-
         bookSearchAdapter = BookSearchAdapter(::clickItem)
         binding.rvSearch.apply {
             setHasFixedSize(true)
@@ -78,7 +80,7 @@ class SearchFragment : androidx.fragment.app.Fragment() {
                 text?.let {
                     val query = it.toString().trim()
                     if (query.isNotBlank()) {
-                        bookSearchViewModel.searchBooks(query)
+                        bookSearchViewModel.searchBook(query)
                         bookSearchViewModel.query = query
                     }
                 }
@@ -86,9 +88,19 @@ class SearchFragment : androidx.fragment.app.Fragment() {
         }
     }
 
-    private fun initView() {
-        bookSearchViewModel.searchResult.observe(viewLifecycleOwner) { bookList ->
-            bookSearchAdapter.submitList(bookList.toList())
+    private fun initObserving() {
+        collectLatestStateFlow(bookSearchViewModel.searchResult) { uiState ->
+            when (uiState) {
+                is UiState.Success -> {
+                    bookSearchAdapter.submitList(uiState.data)
+                }
+                is UiState.Error -> {
+                    Timber.e("error msg : ${uiState.msg}")
+                }
+                is UiState.Loading -> {
+                    // TODO Progress바 띄우기
+                }
+            }
         }
     }
 
