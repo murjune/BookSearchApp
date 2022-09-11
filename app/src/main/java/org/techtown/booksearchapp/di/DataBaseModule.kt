@@ -20,10 +20,10 @@ object DataBaseModule {
         return bookSearchDatabase.bookSearchDao()
     }
 
+    // Hilt에서 항상 동일한 데이터베이스 인스턴스를 제공하도록 Singleton으로
     @Provides
     @Singleton
-    // Hilt에서 항상 동일한 데이터베이스 인스턴스를 제공하도록 Singleton으로
-    fun provideDatabas(@ApplicationContext appContext: Context): BookSearchDatabase {
+    fun provideDatabase(@ApplicationContext appContext: Context): BookSearchDatabase {
         return Room.databaseBuilder(
             appContext.applicationContext,
             BookSearchDatabase::class.java,
