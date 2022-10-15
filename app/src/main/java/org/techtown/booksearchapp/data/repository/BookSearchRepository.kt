@@ -8,7 +8,10 @@ interface BookSearchRepository {
 
     // remote
     fun searchBooks(
-        query: String
+        query: String,
+        sort: String,
+        page: Int,
+        size: Int
     ): Flow<UiState<List<Book>>>
 
     // Room
@@ -17,4 +20,9 @@ interface BookSearchRepository {
     suspend fun deleteBooks(book: Book)
 
     fun getFavoriteBooks(): Flow<List<Book>>
+
+    // DataStore
+    suspend fun saveSortMode(mode: String)
+
+    fun getSortMode(): Flow<String>
 }

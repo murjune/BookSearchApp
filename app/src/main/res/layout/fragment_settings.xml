@@ -1,15 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/fragment_settings"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.view.SettingsFragment">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <data>
+
+        <import type="org.techtown.booksearchapp.util.Sort" />
+
+        <variable
+            name="vm"
+            type="org.techtown.booksearchapp.ui.viewmodel.BookSearchViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/fragment_settings"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/settings" />
+        tools:context=".ui.view.SettingsFragment">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/tv_title_sort"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="40dp"
+            android:text="Sort By"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <RadioGroup
+            android:id="@+id/rg_sort"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="@id/tv_title_sort"
+            app:layout_constraintStart_toStartOf="@id/tv_title_sort"
+            app:layout_constraintTop_toBottomOf="@id/tv_title_sort">
+
+            <com.google.android.material.radiobutton.MaterialRadioButton
+                android:id="@+id/rb_accuracy"
+                android:layout_width="wrap_content"
+                android:text="Accuracy"
+                android:checked="@{vm.sortMode.equals(Sort.ACCURACY.value)}"
+                android:onClick="@{() -> vm.saveSortMode(Sort.ACCURACY.value)}"
+                android:layout_height="wrap_content" />
+
+            <com.google.android.material.radiobutton.MaterialRadioButton
+                android:id="@+id/rb_latest"
+                android:text="Latest"
+                android:checked="@{vm.sortMode.equals(Sort.LATEST.value)}"
+                android:onClick="@{() -> vm.saveSortMode(Sort.LATEST.value)}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RadioGroup>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
