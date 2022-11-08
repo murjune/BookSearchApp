@@ -5,8 +5,8 @@ import dagger.hilt.android.HiltAndroidApp
 import org.techtown.booksearchapp.util.TimberDebugTree
 import timber.log.Timber
 
-@HiltAndroidApp
 // 앱의 수명 주기에 연결된 컨테이너를 추가
+@HiltAndroidApp
 class BookSearchApp : Application() {
 
     override fun onCreate() {

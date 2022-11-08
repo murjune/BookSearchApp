@@ -30,7 +30,6 @@ class BookSearchViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             _sortMode.value = bookSearchRepository.getSortMode().first()
-            Timber.d("init --- sortMode")
         }
     }
 
