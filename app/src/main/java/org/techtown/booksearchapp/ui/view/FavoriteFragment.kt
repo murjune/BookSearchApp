@@ -84,7 +84,7 @@ class FavoriteFragment : Fragment() {
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                val position = viewHolder.adapterPosition
+                val position = viewHolder.absoluteAdapterPosition
                 val book = bookSearchAdapter.currentList[position]
                 bookSearchViewModel.deleteBook(book)
                 Snackbar.make(view, "책을 삭제합니다.", Snackbar.LENGTH_SHORT).apply {
