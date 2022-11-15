@@ -37,7 +37,7 @@ jobs:
                     bookAPIKey: ${{ secrets.BOOKAPIKEY }}
                 run: |
                     echo BASE_URL=\"$BASE_URL\" >> local.properties
-                    echo BOOKAPIKEY=\"$bookAPIKey\" >> local.properties
+                    echo BOOK_API_Key=\"BOOK_API_Key\" >> local.properties
 
             -   name: Grant execute permission for gradlew
                 run: chmod +x gradlew

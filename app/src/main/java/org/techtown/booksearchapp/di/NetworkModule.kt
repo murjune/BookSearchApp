@@ -18,7 +18,7 @@ import javax.inject.Singleton
 @Module
 object NetworkModule {
     private const val BASE_URL: String = BuildConfig.BASE_URL
-    private const val API_KEY = BuildConfig.bookAPIKey
+    private const val API_KEY = BuildConfig.BOOK_API_Key
 
     @Provides
     @Singleton
