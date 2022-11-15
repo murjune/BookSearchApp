@@ -3,20 +3,23 @@
 buildscript {
     dependencies {
         classpath("com.android.tools.build:gradle:7.2.2")
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.7.10")
-        classpath("com.google.dagger:hilt-android-gradle-plugin:2.43.2")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.KOTLIN}")
+        classpath("com.google.dagger:hilt-android-gradle-plugin:${Versions.HILT}")
+        classpath("org.jlleitschuh.gradle:ktlint-gradle:${Versions.KT_LINT}")
     }
 }
 
 plugins {
-    id("com.android.application") version "7.2.0" apply false
-    id("com.android.library") version "7.2.0" apply false
-    id("org.jetbrains.kotlin.android") version "1.7.10" apply false
-    id("org.jetbrains.kotlin.jvm") version "1.7.10" apply false
-    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin") version "2.0.1" apply false
-    id("androidx.navigation.safeargs.kotlin") version "2.5.0" apply false
-    id("org.jetbrains.kotlin.plugin.serialization") version "1.7.10" apply false
+    id(Plugins.ANDROID_APPLICATION) version Versions.AGP apply false
+    id(Plugins.ANDROID_LIBRARY) version Versions.AGP apply false
+    id(Plugins.KOTLIN_ANDROID) version Versions.KOTLIN apply false
+    id(Plugins.KOTLIN_JVM) version Versions.KOTLIN apply false
+    id(Plugins.KOTLIN_SERIALIZATION) version Versions.KOTLIN apply false
+    id(Plugins.SECRETS_GRADLE_PLUGIN) version Versions.SECRETS_GRADLE apply false
+    id(Plugins.SAFEARGS) version Versions.NAVIGATION apply false
 }
+
+apply(plugin = "org.jlleitschuh.gradle.ktlint")
 
 tasks.register("clean", Delete::class) {
     delete(rootProject.buildDir)
