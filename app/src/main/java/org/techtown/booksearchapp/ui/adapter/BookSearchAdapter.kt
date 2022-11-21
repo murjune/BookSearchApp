@@ -39,7 +39,7 @@ class BookSearchAdapter(val clickItem: ((Int) -> Unit)?) :
             binding.tvAuthor.text = "$author | $publisher"
             binding.tvDatetime.text = date
             binding.clBook.setOnClickListener {
-                clickItem?.invoke(adapterPosition)
+                clickItem?.invoke(absoluteAdapterPosition)
             }
         }
     }
